@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Витрина товаров</title>
+</head>
+<body>
+    <h1>Наши товары</h1>
+    <ul>
+        {% for product in products %}
+            <li>
+                <h2>{{ product.name }}</h2>
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width: 200px;">
+                {% endif %}
+                <p>Цена: {{ product.price }}</p>
+                <p>Остаток: {{ product.stock }}</p>
+                <p>Код 1С: {{ product.code_1c }}</p>
+                <p>Категории:
+                    {% for category in product.categories.all %}
+                        {{ category.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </li>
+        {% empty %}
+            <li>Нет доступных товаров.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
