@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -13,6 +14,12 @@ class Product(models.Model):
     code_1c = models.CharField(max_length=255)
     image = models.ImageField(upload_to='products/', blank=True, null=True)
     categories = models.ManyToManyField(Category)
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
