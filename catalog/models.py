@@ -1,3 +1,4 @@
+# catalog/models.py
 from django.db import models
 from django.utils.text import slugify
 #from django.core.exceptions import ValidationError
@@ -23,6 +24,7 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:  # Генерируем только для новых объектов
             self.slug = self._generate_unique_slug()
+            #self.slug = slugify(self.name)
         super().save(*args, **kwargs)
     
     def _generate_unique_slug(self):
