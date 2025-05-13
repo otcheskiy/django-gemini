@@ -1,7 +1,12 @@
-from django.urls import path
+# catalog/urls.py
+from django.urls import path, include
+from rest_framework import routers
 from . import views
 
+router = routers.DefaultRouter()
+router.register(r'products', views.ProductViewSet, basename='product')
+router.register(r'categories', views.CategoryViewSet, basename='category')
+
 urlpatterns = [
-    path('', views.product_list, name='product_list'),
-    path('<slug:product_slug>/', views.product_detail, name='product_detail'),
+    path('api/v1/', include(router.urls)),
 ]
